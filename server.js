@@ -18,6 +18,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(logger);
 
+// Root route
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
+
 // Database Connection
 mongoose
   .connect(process.env.MONGO_URI, {})
