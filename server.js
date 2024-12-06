@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 // Serve static files from the 'images' folder
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.resolve(__dirname, "images")));
 
 // Middleware
 app.use(cors());
