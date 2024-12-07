@@ -1,25 +1,25 @@
-const mongoose = require("mongoose");
-const Lesson = require("./models/lesson");
+const { MongoClient } = require("mongodb");
 require("dotenv").config();
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Error connecting to MongoDB:", err));
-
-// Data to seed
 const lessons = [
+  {
+    subject: "Math",
+    location: "London",
+    price: "50",
+    spaces: 5,
+  },
+  {
+    subject: "Physics",
+    location: "Manchester",
+    price: "60",
+    spaces: 5,
+  },
   {
     id: 1,
     subject: "Math",
     location: "London",
     price: "50",
     spaces: 5,
-    image: "/images/mathematics.jpg",
   },
   {
     id: 2,
@@ -27,7 +27,6 @@ const lessons = [
     location: "Manchester",
     price: "60",
     spaces: 5,
-    image: "/images/physics.jpg",
   },
   {
     id: 3,
@@ -35,7 +34,6 @@ const lessons = [
     location: "Birmingham",
     price: "55",
     spaces: 5,
-    image: "/images/chemistry.jpg",
   },
   {
     id: 4,
@@ -43,7 +41,6 @@ const lessons = [
     location: "Liverpool",
     price: "65",
     spaces: 5,
-    image: "/images/biology.jpg",
   },
   {
     id: 5,
@@ -51,7 +48,6 @@ const lessons = [
     location: "Bristol",
     price: "45",
     spaces: 5,
-    image: "/images/english.jpg",
   },
   {
     id: 6,
@@ -59,7 +55,6 @@ const lessons = [
     location: "Edinburgh",
     price: "50",
     spaces: 5,
-    image: "/images/history.jpg",
   },
   {
     id: 7,
@@ -67,7 +62,6 @@ const lessons = [
     location: "Cardiff",
     price: "40",
     spaces: 5,
-    image: "/images/art.jpg",
   },
   {
     id: 8,
@@ -75,7 +69,6 @@ const lessons = [
     location: "Glasgow",
     price: "55",
     spaces: 5,
-    image: "/images/geography.jpg",
   },
   {
     id: 9,
@@ -83,7 +76,6 @@ const lessons = [
     location: "Manchester",
     price: "75",
     spaces: 5,
-    image: "/images/computer.jpg",
   },
   {
     id: 10,
@@ -91,7 +83,6 @@ const lessons = [
     location: "London",
     price: "65",
     spaces: 5,
-    image: "/images/psychology.jpg",
   },
   {
     id: 11,
@@ -99,7 +90,6 @@ const lessons = [
     location: "Cambridge",
     price: "70",
     spaces: 5,
-    image: "/images/philosophy.jpg",
   },
   {
     id: 13,
@@ -107,7 +97,6 @@ const lessons = [
     location: "Nottingham",
     price: "55",
     spaces: 5,
-    image: "/images/music.jpg",
   },
   {
     id: 14,
@@ -115,7 +104,6 @@ const lessons = [
     location: "Leeds",
     price: "80",
     spaces: 5,
-    image: "/images/economics.jpg",
   },
   {
     id: 16,
@@ -123,28 +111,32 @@ const lessons = [
     location: "Newcastle",
     price: "85",
     spaces: 5,
-    image: "/images/law.jpg",
   },
 ];
 
-// Seed data function
-const seedData = async () => {
+(async () => {
+  const client = new MongoClient(process.env.MONGO_URI, {
+    useUnifiedTopology: true,
+  });
+
   try {
+    await client.connect();
+    console.log("Connected to MongoDB");
+
+    const db = client.db("LessonApp-3144");
+    const lessonsCollection = db.collection("lessons");
+
     // Clear existing data
-    await Lesson.deleteMany({});
-    console.log("Existing lessons cleared.");
+    await lessonsCollection.deleteMany({});
+    console.log("Existing lessons cleared");
 
     // Insert new data
-    const insertedLessons = await Lesson.insertMany(lessons);
-    console.log("Lessons seeded:", insertedLessons);
+    const result = await lessonsCollection.insertMany(lessons);
+    console.log("Lessons seeded:", result.insertedCount);
 
-    mongoose.connection.close();
-    console.log("Database seeding completed!");
+    client.close();
   } catch (err) {
     console.error("Error seeding data:", err);
-    mongoose.connection.close();
+    client.close();
   }
-};
-
-// Run the seed function
-seedData();
+})();

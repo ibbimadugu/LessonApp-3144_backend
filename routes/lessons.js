@@ -1,44 +1,52 @@
 const express = require("express");
-const Lesson = require("../models/lesson");
+const { ObjectId } = require("mongodb");
 const router = express.Router();
 
-// GET
+// GET all lessons
 router.get("/", async (req, res) => {
   try {
-    const lessons = await Lesson.find();
+    const lessons = await req.lessonsCollection.find().toArray();
     res.json(lessons);
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
 
-// PUT
+// PUT update a lesson
 router.put("/:id", async (req, res) => {
   try {
+    const { id } = req.params;
     const { space } = req.body;
-    const updatedLesson = await Lesson.findByIdAndUpdate(
-      req.params.id,
-      { space },
-      { new: true }
+
+    const result = await req.lessonsCollection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { spaces: space } }
     );
-    res.json(updatedLesson);
+
+    if (result.matchedCount === 0) {
+      return res.status(404).send("Lesson not found");
+    }
+
+    res.json({ message: "Lesson updated successfully" });
   } catch (err) {
     res.status(500).send(err.message);
   }
 });
 
-// GET (Search lessons)
+// GET search lessons
 router.get("/search", async (req, res) => {
   try {
     const { query } = req.query;
-    const lessons = await Lesson.find({
-      $or: [
-        { topic: { $regex: query, $options: "i" } },
-        { location: { $regex: query, $options: "i" } },
-        { price: { $regex: query, $options: "i" } },
-        { space: { $regex: query, $options: "i" } },
-      ],
-    });
+    const lessons = await req.lessonsCollection
+      .find({
+        $or: [
+          { subject: { $regex: query, $options: "i" } },
+          { location: { $regex: query, $options: "i" } },
+          { price: { $regex: query, $options: "i" } },
+        ],
+      })
+      .toArray();
+
     res.json(lessons);
   } catch (err) {
     res.status(500).send(err.message);
