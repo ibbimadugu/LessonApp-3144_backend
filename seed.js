@@ -3,18 +3,6 @@ require("dotenv").config();
 
 const lessons = [
   {
-    subject: "Math",
-    location: "London",
-    price: "50",
-    spaces: 5,
-  },
-  {
-    subject: "Physics",
-    location: "Manchester",
-    price: "60",
-    spaces: 5,
-  },
-  {
     id: 1,
     subject: "Math",
     location: "London",
@@ -115,9 +103,7 @@ const lessons = [
 ];
 
 (async () => {
-  const client = new MongoClient(process.env.MONGO_URI, {
-    useUnifiedTopology: true,
-  });
+  const client = new MongoClient(process.env.MONGO_URI);
 
   try {
     await client.connect();
