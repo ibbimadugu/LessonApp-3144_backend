@@ -22,12 +22,17 @@ const client = new MongoClient(process.env.MONGO_URI);
 let lessonsCollection;
 let ordersCollection;
 
-client.connect().then(() => {
-  console.log("Connected to MongoDB");
-  const db = client.db("LessonApp-3144");
-  lessonsCollection = db.collection("lessons");
-  ordersCollection = db.collection("orders");
-});
+client
+  .connect()
+  .then(() => {
+    console.log("Connected to MongoDB");
+    const db = client.db("LessonApp-3144");
+    lessonsCollection = db.collection("lessons");
+    ordersCollection = db.collection("orders");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+  });
 
 // Root route
 app.get("/", (req, res) => {
