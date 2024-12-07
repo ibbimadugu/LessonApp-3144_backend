@@ -8,6 +8,7 @@ const lessons = [
     location: "London",
     price: "50",
     spaces: 5,
+    image: "/images/mathematics.jpg",
   },
   {
     id: 2,
@@ -15,6 +16,7 @@ const lessons = [
     location: "Manchester",
     price: "60",
     spaces: 5,
+    image: "/images/physics.jpg",
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ const lessons = [
     location: "Birmingham",
     price: "55",
     spaces: 5,
+    image: "/images/chemistry.jpg",
   },
   {
     id: 4,
@@ -29,6 +32,7 @@ const lessons = [
     location: "Liverpool",
     price: "65",
     spaces: 5,
+    image: "/images/biology.jpg",
   },
   {
     id: 5,
@@ -36,6 +40,7 @@ const lessons = [
     location: "Bristol",
     price: "45",
     spaces: 5,
+    image: "/images/english.jpg",
   },
   {
     id: 6,
@@ -43,6 +48,7 @@ const lessons = [
     location: "Edinburgh",
     price: "50",
     spaces: 5,
+    image: "/images/history.jpg",
   },
   {
     id: 7,
@@ -50,6 +56,7 @@ const lessons = [
     location: "Cardiff",
     price: "40",
     spaces: 5,
+    image: "/images/art.jpg",
   },
   {
     id: 8,
@@ -57,6 +64,7 @@ const lessons = [
     location: "Glasgow",
     price: "55",
     spaces: 5,
+    image: "/images/geography.jpg",
   },
   {
     id: 9,
@@ -64,6 +72,7 @@ const lessons = [
     location: "Manchester",
     price: "75",
     spaces: 5,
+    image: "/images/computer.jpg",
   },
   {
     id: 10,
@@ -71,6 +80,7 @@ const lessons = [
     location: "London",
     price: "65",
     spaces: 5,
+    image: "/images/psychology.jpg",
   },
   {
     id: 11,
@@ -78,6 +88,7 @@ const lessons = [
     location: "Cambridge",
     price: "70",
     spaces: 5,
+    image: "/images/philosophy.jpg",
   },
   {
     id: 13,
@@ -85,6 +96,7 @@ const lessons = [
     location: "Nottingham",
     price: "55",
     spaces: 5,
+    image: "/images/music.jpg",
   },
   {
     id: 14,
@@ -92,6 +104,7 @@ const lessons = [
     location: "Leeds",
     price: "80",
     spaces: 5,
+    image: "/images/economics.jpg",
   },
   {
     id: 16,
@@ -99,6 +112,7 @@ const lessons = [
     location: "Newcastle",
     price: "85",
     spaces: 5,
+    image: "/images/law.jpg",
   },
 ];
 
