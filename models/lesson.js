@@ -1,14 +1,12 @@
 // models/lesson.js
-const mongoose = require("mongoose");
+const { ObjectId } = require("mongodb");
 
-const lessonSchema = new mongoose.Schema({
-  subject: { type: String, required: true },
-  location: { type: String, required: true },
-  price: { type: String, required: true },
-  spaces: { type: Number, required: true },
-  image: { type: String, required: true },
-});
+const lessonSchema = {
+  subject: { type: "string", required: true },
+  location: { type: "string", required: true },
+  price: { type: "string", required: true },
+  spaces: { type: "number", required: true },
+  image: { type: "string", required: true },
+};
 
-const Lesson = mongoose.model("Lesson", lessonSchema);
-
-module.exports = Lesson;
+module.exports = lessonSchema;

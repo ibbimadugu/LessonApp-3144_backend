@@ -1,14 +1,15 @@
-const mongoose = require("mongoose");
+// models/order.js
+const { ObjectId } = require("mongodb");
 
-const orderSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  phone: { type: String, required: true },
+const orderSchema = {
+  name: { type: "string", required: true },
+  phone: { type: "string", required: true },
   lessonIDs: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: [ObjectId],
     ref: "Lesson",
     required: true,
   },
-  spaces: { type: Number, required: true },
-});
+  spaces: { type: "number", required: true },
+};
 
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = orderSchema;

@@ -17,7 +17,6 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Create a new order using the Order model (Mongoose)
     const newOrder = new Order({
       name,
       phone,
@@ -82,7 +81,6 @@ router.put("/:id", async (req, res) => {
       });
     }
 
-    // Update the order in the database using Mongoose's findByIdAndUpdate method
     const updatedOrder = await Order.findByIdAndUpdate(
       id,
       { name, phone, lessonIDs, spaces },
