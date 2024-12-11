@@ -60,4 +60,49 @@ router.get("/", async (req, res) => {
   }
 });
 
+// PUT - Update an Order
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, phone, lessonIDs, spaces } = req.body;
+
+    // Validate order ID
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid order ID" });
+    }
+
+    // Validate fields (optional update, so no fields are strictly required)
+    const updateFields = {};
+    if (name) updateFields.name = name;
+    if (phone) updateFields.phone = phone;
+    if (lessonIDs) {
+      if (!Array.isArray(lessonIDs)) {
+        return res
+          .status(400)
+          .json({ error: "lessonIDs must be an array of IDs" });
+      }
+      updateFields.lessonIDs = lessonIDs.map((id) => new ObjectId(id));
+    }
+    if (spaces) updateFields.spaces = spaces;
+
+    // Update the order in MongoDB
+    const result = await req.ordersCollection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updateFields }
+    );
+
+    if (result.matchedCount > 0) {
+      res.status(200).json({ message: "Order updated successfully" });
+    } else {
+      res.status(404).json({ error: "Order not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Failed to update order",
+      details: err.message,
+    });
+  }
+});
+
 module.exports = router;
